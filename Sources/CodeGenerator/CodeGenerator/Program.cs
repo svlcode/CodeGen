@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using CodeGenerator.Forms;
 
 namespace CodeGenerator
 {
@@ -15,7 +16,7 @@ namespace CodeGenerator
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SelectDatabaseForm());
+            Application.Run(new MainForm());
         }
     }
 }
