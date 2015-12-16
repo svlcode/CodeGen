@@ -17,8 +17,8 @@ namespace CodeGenerator.Forms
     public partial class ProjectForm : DevExpress.XtraEditors.XtraForm
     {
         private readonly IProjectManager _projectManager;
-        private string _connString;
         public ProjectData Project { get; set; }
+        private string _connString;
 
         public ProjectForm(IProjectManager projectManager)
         {
@@ -30,10 +30,15 @@ namespace CodeGenerator.Forms
         {
             using (var selectDatabaseForm = new SelectDatabaseForm())
             {
+                selectDatabaseForm.ConnectionString = _connString;
+                
                 if(selectDatabaseForm.ShowDialog() == DialogResult.OK)
                 {
                     txtDatabase.Text = selectDatabaseForm.DatabaseName;
-                    txtProjectName.Text = selectDatabaseForm.DatabaseName;
+                    if (string.IsNullOrWhiteSpace(txtProjectName.Text))
+                    {
+                        txtProjectName.Text = selectDatabaseForm.DatabaseName;    
+                    }
                     _connString = selectDatabaseForm.ConnectionString;
                 }
             }
@@ -57,9 +62,9 @@ namespace CodeGenerator.Forms
                 }
                 else
                 {
-                    var project = new ProjectData { ConnString = _connString, Name = txtProjectName.Text };
-                    Project = project;
-                    _projectManager.Save(project);
+                    Project.Name = txtProjectName.Text;
+                    _projectManager.Save(Project);
+                    this.Close();
                 }
             }
         }
@@ -76,6 +81,11 @@ namespace CodeGenerator.Forms
                 this.Text = "Edit project";
                 txtProjectName.Text = Project.Name;
                 txtDatabase.Text = new ConnectionData(Project.ConnString).DatabaseName;
+                _connString = Project.ConnString;
+            }
+            else
+            {
+                Project = new ProjectData();
             }
         }
     }

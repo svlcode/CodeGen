@@ -8,8 +8,19 @@ namespace CodeGenerator.Forms
 {
     public partial class SelectDatabaseForm : XtraForm
     {
-        public string DatabaseName { get { return txtDatabaseName.Text;} }
-        public string ConnectionString { get; private set; }
+        public string DatabaseName
+        {
+            get { return txtDatabaseName.Text; }
+            set { txtDatabaseName.Text = value; }
+        }
+
+        public string Server
+        {
+            get { return txtServer.Text; }
+            set { txtServer.Text = value; }
+        }
+
+        public string ConnectionString { get; set; }
 
         public SelectDatabaseForm()
         {
@@ -37,6 +48,16 @@ namespace CodeGenerator.Forms
             {
                 DialogResult = DialogResult.OK;
                 Close();
+            }
+        }
+
+        private void SelectDatabaseForm_Load(object sender, EventArgs e)
+        {
+            if(!string.IsNullOrEmpty(ConnectionString))
+            {
+                var connData = new ConnectionData(ConnectionString);
+                DatabaseName = connData.DatabaseName;
+                Server = connData.Server;
             }
         }
     }

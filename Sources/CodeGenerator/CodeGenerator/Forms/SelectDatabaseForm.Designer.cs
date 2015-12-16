@@ -119,6 +119,7 @@
             this.Name = "SelectDatabaseForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Select database";
+            this.Load += new System.EventHandler(this.SelectDatabaseForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

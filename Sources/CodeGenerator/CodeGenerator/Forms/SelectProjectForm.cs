@@ -41,7 +41,7 @@ namespace CodeGenerator.Forms
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
-            var project = listBoxControl1.SelectedItem as ProjectData;
+            var project = GetSelectedProject();
             if(project != null)
             {
                 this.SelectedProject = project;
@@ -56,15 +56,25 @@ namespace CodeGenerator.Forms
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-             var project = listBoxControl1.SelectedItem as ProjectData;
-             if (project != null)
-             {
-                 using (var projectForm = FormFactory.CreateProjectForm())
-                 {
-                     projectForm.Project = project;
-                     projectForm.ShowDialog();
-                 }
-             }
+            var project = GetSelectedProject();
+            if (project != null)
+            {
+                using (var projectForm = FormFactory.CreateProjectForm())
+                {
+                    projectForm.Project = project;
+                    projectForm.ShowDialog();
+                }
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private ProjectData GetSelectedProject()
+        {
+            return listBoxControl1.SelectedItem as ProjectData;
         }
     }
 }
